@@ -1,0 +1,4 @@
+9826 exact multiplication-tail identities including endpoint atoms
+27000 exact common-level padding checks with ties and zero masses
+8771 exact binary-emission marginal vectors
+4200 exact weighted hinge identities with signed payoffs and ties

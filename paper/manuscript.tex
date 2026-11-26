@@ -1,0 +1,157 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\DeclareFontShape{OMX}{cmex}{m}{n}{<->cmex10}{}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={The complexity of lower-tail risk constraints for long-run mean payoff}}
+\DeclareMathSizes{8}{8}{8}{8}
+\DeclareMathSizes{9}{9}{8}{8}
+\DeclareMathSizes{10.95}{10.95}{8}{8}
+\newtheorem{theorem}{Theorem}
+\newcommand{\RR}{\exists\mathbb R}
+\newcommand{\CV}{\operatorname{CVaR}}
+\title[Lower-tail risk constraints for long-run mean payoff]{The complexity of lower-tail risk constraints\texorpdfstring{\\}{ }for long-run mean payoff}
+\date{November 27, 2026}
+\begin{document}
+\begin{abstract}
+We classify simultaneous expectation and lower-tail conditional value-at-risk constraints on coordinatewise liminf mean payoff in finite rational Markov decision processes. The exact decision problem is \(\RR\)-complete. Hardness persists with half-tail constraints and bounded nonnegative integer state rewards. It also holds for pure CVaR at any fixed rational interior tail level with binary state rewards. A multiplication gadget makes the selected mass of a low-tail outcome depend on one variable and its payoff depend on another.
+\end{abstract}
+\maketitle
+
+\section{The decision problem}
+
+Let \(S\) be the states of a finite Markov decision process, \(s_0\) its initial state, and \(P(s'\mid a)\) the rational transition probabilities under action \(a\). Denote the actions at \(s\) by \(A(s)\), with actions named by their source state. The vector of state rewards is \(r:S\to\mathbb Q^d\). A randomized strategy can use the full state and action history and can choose real action probabilities. Its run induces the payoffs
+\[
+ X_j=\liminf_{n\to\infty}\frac1n\sum_{t=0}^{n-1}r_j(S_t).
+\]
+For rational \(p_j\in(0,1)\) and rational \(e_j,c_j\), ask whether one strategy satisfies both \(\mathbb E X_j\ge e_j\) and \(\CV_{p_j}(X_j)\ge c_j\) for every coordinate. Here \(\CV_p\) averages exactly the lowest \(p\) probability mass, taking a fraction of a quantile atom when necessary. The number of coordinates is part of the input.
+
+K\v{r}et\'insk\'y and Meggendorfer \cite[Definition~3.2 and \S6.3]{km} established NP-hardness and a PSPACE upper bound based on the existential theory of the reals. Meggendorfer \cite[\S6.2]{thesis} asks whether NP suffices.
+
+\begin{theorem}\label{thm:base}
+The joint decision problem is \(\RR\)-complete under polynomial-time many-one reductions. Hardness holds when every \(p_j=1/2\) and all state rewards lie in a fixed bounded set of nonnegative integers.
+\end{theorem}
+
+\begin{theorem}\label{thm:pure}
+For every fixed rational \(q\in(0,1)\), the problem with only CVaR constraints, all at level \(q\), is \(\RR\)-complete even for state rewards in \(\{0,1\}^d\). The reduction is polynomial also in the encoding length of \(q\).
+\end{theorem}
+
+Here \(\RR\) is the class of problems polynomial-time many-one reducible to the existential theory of the reals. In particular, NP suffices for the problem of Theorem~\ref{thm:base} exactly if \(\mathrm{NP}=\RR\).
+
+\section{The hinge formula and the prior membership method}
+
+For a bounded random variable \(X\), the fractional lower-tail average satisfies
+\begin{equation}\label{eq:hinge}
+ \CV_p(X)=\max_{t\in\mathbb R}\left[t-\frac1p\mathbb E(t-X)_+\right].
+\end{equation}
+The objective is concave in \(t\), with left and right derivatives \(1-\Pr(X<t)/p\) and \(1-\Pr(X\le t)/p\). Thus a \(p\)-quantile maximizes it. Evaluating there gives the tail integral with the necessary fraction of the quantile atom. Another consequence is that for any finite label \(L\),
+\begin{equation}\label{eq:jensen}
+ \CV_p(X)\le\CV_p(\mathbb E[X\mid L]).
+\end{equation}
+Indeed the hinge is convex in \(X\) for each cutoff, so conditional Jensen decreases the hinge expectation after compression. Ordinary expectation is preserved.
+
+We use the maximal end component (MEC) reduction of \cite{km}. Their Lemma~6.7, Theorem~6.8 and Figure~9 supply the flow characterization. An end component is a set of states with internal actions whose transition graph is strongly connected. The maximal ones have disjoint state sets. For these objectives a policy with deterministic mean vector conditional on the eventual MEC is sufficient. The transient variables \(y_a\) record flow along actions before commitment, and \(y_s\) records the probability of committing in state \(s\). The recurrent variables \(x_a,x_s\) are unconditional long-run action and state frequencies. Commit variables vanish outside MECs and recurrent action variables vanish for actions not internal to a MEC. Write \(\delta_{s,s_0}=1\) at the initial state and zero otherwise. For nonnegative variables, the flow conditions are
+\begin{align}
+ \delta_{s,s_0}+\sum_a y_a P(s\mid a)
+    &=y_s+\sum_{a\in A(s)} y_a &&(s\in S),\\
+ \sum_s y_s&=1,\\
+ \sum_{s\in M_i}x_s&=\sum_{s\in M_i}y_s &&(\text{each }M_i),\\
+ \sum_a x_aP(s\mid a)&=x_s=\sum_{a\in A(s)}x_a &&(s\in S).
+\end{align}
+The cited result gives feasible strategies realizing these flows with constant conditional payoff and supports the use of such flows for the decision problem. Write \(w_i=\sum_{s\in M_i}x_s\) and \(u_{ij}=\sum_{s\in M_i}x_s r_j(s)\). The conditional value is \(u_{ij}/w_i\) when \(w_i>0\). The expectation bound is \(\sum_i u_{ij}\ge e_j\). For each dimension introduce a real \(t_j\) and nonnegative \(H_{ij}\) with
+\begin{equation}\label{eq:weighted-hinge}
+ H_{ij}\ge w_i t_j-u_{ij},\qquad
+ p_j t_j-\sum_i H_{ij}\ge p_j c_j .
+\end{equation}
+The least permissible \(H_{ij}\) is exactly the mass-weighted hinge and is zero when \(w_i=0\). Thus \eqref{eq:weighted-hinge} is equivalent to the required CVaR bound by \eqref{eq:hinge}. This polynomial-size formula has degree at most two. It expresses directly the real-algebraic membership method of \cite{km}, bypassing the cutoff-order guesses of the original proof. The remaining task here is hardness.
+
+\section{Hardness via a moving cutoff atom}
+
+\subsection{Bounded algebraic systems}
+Use ETR-INV from \cite[Definition~14 and Theorem~16]{aam}. It has variables \(v_i\in[1/2,2]\) and equations \(v_i=1\), \(v_i+v_j=v_k\), and \(v_i v_j=1\). Put \(v_i=(1+3x_i)/2\). The first two types give linear equations with bounded integer coefficients after clearing denominators. For each inverse equation introduce \(w\in[0,1]\) and require
+\[
+ x_i x_j=w,\qquad 3w+x_i+x_j=1 .
+\]
+It therefore suffices to represent linear equalities and equations \(xy=z\) on bounded variables. Repeated indices are allowed.
+
+\subsection{Branches and frequency equalities}
+For \(N\ge1\) variables, set \(h=1/(16N)\). One forced initial action sends mass \(h\) to each of five branches per variable. The first branch of variable \(x_i\) offers a choice between absorbing states \(L_i,H_i\). A strategy defines \(x_i\) as its conditional probability of choosing \(L_i\). Its unconditional mass is \(hx_i\). The other four branches lead to disjoint two-state closed components, named pivot and compensation X, Y and Z. From either state of each copy one can choose the next state to be 0 or 1. The remaining branches go to two absorbing padding states with probabilities \(b=1/2-4h\) and \(1-5Nh-b\). Both are positive, and all initial probabilities sum to one.
+
+For each copy of \(x_i\), let \(F_n\) be its empirical state-1 frequency. In an expectation coordinate give reward \(+1\) to state 1 of that copy, \(-1\) to \(L_i\), and zero elsewhere. Add an opposite coordinate. The two expectation lower bounds of zero are
+\[
+ h\bigl(\mathbb E[\liminf F_n\mid\mathrm{copy}]-x_i\bigr)\ge0,
+ \qquad
+ h\bigl(x_i-\mathbb E[\limsup F_n\mid\mathrm{copy}]\bigr)\ge0 .
+\]
+Since the bounded limsup is at least the liminf, both expectations equal \(x_i\) and the empirical frequency converges almost surely. Its random limit has conditional mean \(x_i\). This conclusion holds for any randomized history-dependent policy. To enforce a linear equation, use coefficients on the states \(L_i\) and impose both signs of the expectation bound, scaling its constant by \(h\). Unused CVaR bounds in these coordinates are set at the minimum state reward.
+
+Conversely, a prescribed assignment \(x_i\in[0,1]\) is realized by selecting \(L_i\) with probability \(x_i\), and by choosing the next state of each copy independently with the same probability for state 1. The law of large numbers then gives the constant frequencies \(x_i\), including endpoints.
+
+\subsection{One multiplication}
+For each equation \(xy=z\), add two reward coordinates indexed by \(\sigma\in\{1,-1\}\). Begin with the constant-mean case for each branch. The branch masses and values in the \(\sigma\) coordinate are as follows.
+\[
+\begin{array}{lcc}
+ \text{Branch} & \text{Mass} & \text{Payoff} \\
+ \text{Low padding} & b & -2 \\
+ \text{Compensation X for }x & h & 2x \\
+ \text{Compensation Y for }y & h & -\sigma y \\
+ \text{Compensation Z for }z & h & \sigma z \\
+ L_x & hx & 3 \\
+ \text{Pivot for }y & h & 5+\sigma y \\
+ \text{All others} & \text{remaining} & 9
+\end{array}
+\]
+An affine payoff \(u+v x_i\) in a copy comes from state rewards \(u,u+v\). Role copies are disjoint even for a repeated variable. The three compensation values lie in \([-1,2]\), so they all precede \(L_x\), and the pivot lies in \([4,6]\). The cumulative mass before the pivot is \(b+3h+hx\); the lowest half therefore uses exactly \(h(1-x)\) from the pivot. Its payoff integral is
+\begin{align*}
+ &-2b+h\bigl(2x-\sigma y+\sigma z+3x+(1-x)(5+\sigma y)\bigr)\\
+ &\hspace{2em}=-2b+h\bigl(5+\sigma(z-xy)\bigr).
+\end{align*}
+The lower bound \(2(-2b+5h)\) on both half-tail averages thus enforces \(z=xy\). This calculation also holds when the pivot is unused or fully used.
+
+For an arbitrary satisfying strategy, the expectation coordinates imply convergence of the relevant copy frequency with the prescribed mean. Compress each risk payoff to its conditional mean on the terminal branch, distinguishing \(L_i\) from \(H_i\). By \eqref{eq:jensen} this can only increase each lower-tail average. The table applies to the compressed values and forces the original multiplication equations. Conversely the strategy for a prescribed satisfying assignment gives constant branch values, attaining both risk bounds. Unused expectation bounds are set at the minimum reward. A common additive shift within each dimension, with the same shift of its bounds, makes all state rewards nonnegative. The construction has polynomially many states and coordinates with polynomial bit lengths. This proves Theorem~\ref{thm:base}. For example \(x^2=1/2\) with \(x\in[0,1]\) forces the irrational start-action probability \(1/\sqrt2\) on rational input data.
+
+\section{Pure CVaR and binary state rewards}\label{sec:binary}
+
+\subsection{Move every constraint to one tail level}
+Consider a hard instance from Theorem~\ref{thm:base} with rewards in \([0,R]\), for a positive integer \(R\). Duplicate coordinates once per constraint. Let \(q\in(0,1)\) be rational and \(w=\min(q,1-q)\). A new initial action sends probability \(w\) to the old initial state, and masses \(q-w, w/2, 1-q-w/2\) to three sinks. These masses are nonnegative and together with \(w\) sum to one. In every coordinate the first and third sinks pay 0 and \(R\), respectively. The middle sink pays \(R\) for an expectation coordinate and 0 for a half-tail coordinate.
+
+For a conditional payoff \(X\) on the original branch, let \(X'\) be the padded payoff. In the expectation case the lower \(q\) fraction contains \(q-w\) at zero and the entire old branch. In the half-tail case it contains \(q-w/2\) at zero and the bottom half of the old branch. Ties at 0 and \(R\) can be split between branches without changing their contribution. Consequently
+\[
+ \CV_q(X')=\frac wq\mathbb E X
+ \quad\text{or}\quad
+ \CV_q(X')=\frac{w}{2q}\CV_{1/2}(X),
+\]
+respectively. Scale thresholds by these positive factors. Conditional on entering the old branch, its feasible policies are precisely the old policies because the new initial history is fixed and a finite prefix has no effect on the mean.
+
+\subsection{Replace each step with three binary-reward steps}
+For a state \(s\), let the breakpoints be the distinct values among \(0,1,r_j(s)/R\) for \(1\le j\le d\), sorted as \(0=b_0<b_1<\cdots<b_k=1\). The new sampling state for \(s\) has a forced transition to an emission state for each interval \((b_{\ell-1},b_\ell)\), with probability \(b_\ell-b_{\ell-1}\). The emission pays vector \(Z\) whose \(j\)-th entry is 1 if the interval lies below \(r_j(s)/R\), and 0 otherwise. Thus its conditional mean in that coordinate is \(r_j(s)/R\). There are at most \(d+1\) emission outcomes. Each emission state has a forced exit to the controller state for \(s\). This controller offers the original actions and routes the original transition probabilities to the next sampling state. The sampling and controller states have zero rewards. Absorbing old states loop through the same three-step blocks.
+
+Let \(s_i\) be the old state in block \(i\). Let \(\mathcal F_i\) be the history through entry to its sampling state. For every coordinate,
+\[
+ D_i=Z_{ij}-r_j(s_i)/R
+\]
+is \(\mathcal F_{i+1}\)-measurable, has absolute value at most one, and has conditional mean zero given \(\mathcal F_i\). These martingale differences remain valid when controls depend on earlier or current emissions. By Azuma--Hoeffding,
+\[
+ \Pr\left(\left|\sum_{i=0}^{n-1}D_i\right|\ge\varepsilon n\right)
+ \le 2\exp(-\varepsilon^2 n/2).
+\]
+Summability and Borel--Cantelli on a countable sequence of positive \(\varepsilon\) show almost sure convergence of the average difference to zero, in every coordinate. Partial blocks affect averages by \(o(1)\). The whole liminf vector is thus the payoff vector on the projected old state sequence scaled by \(1/(3R)\).
+
+An old strategy lifts by ignoring emissions. Conversely take an expanded policy and define an old policy at each positive-probability old state-action history by the conditional law of its next action given that projected history. Use any available action for a zero-probability history. Given the projected history and chosen action, the next old state has the prescribed old transition law. Induction reproduces all finite-dimensional projected state-action distributions, so the projected path law is valid under the old policy. This preserves the payoff law under adaptive use of the emission data. Scale all thresholds by \(1/(3R)\). The number of states, rational probabilities and bit lengths grow polynomially. The membership formulation already allows pure CVaR. This proves Theorem~\ref{thm:pure}.
+
+\section*{Research disclosure}
+
+\begingroup\raggedright
+Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and original replay packet. The release includes the archived pure-CVaR companion. OpenAI Codex reviewed the mathematics and revised the manuscript. GPT-6.2 Sol checked the original complexity question and related results, prepared the exact finite replay and worked visual, and assembled the release. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.
+\par\endgroup
+
+\begin{thebibliography}{9}
+\bibitem{aam}
+M. Abrahamsen, A. Adamaszek, and T. Miltzow, \emph{The art gallery problem is \(\RR\)-complete}, J. ACM \textbf{69}(1) (2022), Article 4. \href{https://doi.org/10.1145/3486220}{doi:10.1145/3486220}.
+\bibitem{km}
+J. K\v{r}et\'insk\'y and T. Meggendorfer, \emph{Conditional value-at-risk for reachability and mean payoff in Markov decision processes}, Proc. LICS (2018), 609--618. \href{https://doi.org/10.1145/3209108.3209176}{doi:10.1145/3209108.3209176}. \href{https://arxiv.org/html/1805.02946v1}{Author manuscript}.
+\bibitem{thesis}
+T. Meggendorfer, \emph{Verification of discrete-time Markov decision processes}, Ph.D. dissertation, Technical University of Munich, 2021. \href{https://mediatum.ub.tum.de/doc/1550256/1550256.pdf}{Dissertation}.
+\end{thebibliography}
+\end{document}

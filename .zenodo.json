@@ -1,0 +1,30 @@
+{
+  "title": "The complexity of lower-tail risk constraints for long-run mean payoff",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "publication_date": "2026-11-27",
+  "creators": [
+    {
+      "name": "DannyExperiments"
+    }
+  ],
+  "description": "Simultaneous expectation and lower-tail CVaR constraints on coordinatewise liminf mean payoff in finite rational Markov decision processes are ∃ℝ-complete. Pure CVaR remains complete at any fixed rational interior tail level with binary state rewards.\n\nKřetínský and Meggendorfer gave NP-hardness and a real-algebraic upper-bound method in LICS 2018. The present contribution is matching existential-real hardness. The reduction forces limiting frequencies to represent bounded variables. In each multiplication constraint, the lower tail selects a variable fraction of a pivot branch whose payoff varies independently. Opposed signs enforce the product equation. A quadratic hinge formulation makes the prior membership method explicit.\n\nAdding fixed padding absorbs the expectation constraints into the common tail level. Three-step binary emissions then preserve the full payoff law up to scale, even when policies react to the emissions. Exact replays check tail products, padding, hinge identities and binary marginals. The illustrated explorer shows how the selected pivot mass encodes multiplication. The classification covers randomized history-dependent policies with variable reward dimension. An NP algorithm would be equivalent to NP = ∃ℝ. External peer review and formal verification are pending.\n\nUnder human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and original replay packet. The release includes the archived pure-CVaR companion. OpenAI Codex reviewed the mathematics and revised the manuscript. GPT-6.2 Sol checked the original complexity question and related results, prepared the exact finite replay and worked visual, and assembled the release. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.",
+  "keywords": [
+    "Markov decision processes",
+    "conditional value-at-risk",
+    "mean payoff",
+    "existential theory of the reals",
+    "multi-objective verification",
+    "risk constraints"
+  ],
+  "access_right": "open",
+  "license": "other-closed",
+  "notes": "All rights reserved. Publicly downloadable files are supplied without a repository-wide reuse license.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/releases/tag/v1.0.0",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}
