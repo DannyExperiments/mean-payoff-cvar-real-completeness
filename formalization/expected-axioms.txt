@@ -1,0 +1,2 @@
+'TailGadget.pivot_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TailGadget.multiplication' depends on axioms: [propext, Classical.choice, Quot.sound]

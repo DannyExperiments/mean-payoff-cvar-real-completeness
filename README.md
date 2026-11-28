@@ -1,5 +1,6 @@
 # The complexity of lower-tail risk constraints for long-run mean payoff
 
+[![Lean · CVaR multiplication gadget](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/lean.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/lean.yml)
 [![Repository verification](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/verify.yml) [![Replay verification](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/replay.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/replay.yml) [![PDF build](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/pdf.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/mean-payoff-cvar-real-completeness/actions/workflows/pdf.yml) [![Version DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24572376.svg)](https://doi.org/10.5281/zenodo.24572376)
 
 Simultaneous expectation and lower-tail CVaR constraints on coordinatewise liminf mean payoff in finite rational Markov decision processes are ∃ℝ-complete. Pure CVaR remains complete at any fixed rational interior tail level with binary state rewards. NP suffices exactly if NP = ∃ℝ.
@@ -30,3 +31,7 @@ The [recorded replay](verification/results/replay.txt) checks the multiplication
 ## Cite
 
 DannyExperiments. *The complexity of lower-tail risk constraints for long-run mean payoff*. Version 1.0.0, 27 November 2026. [Version DOI](https://doi.org/10.5281/zenodo.24572376).
+
+## Lean verification
+
+Lean checks the mass drawn from the pivot and proves that the two signed lower-tail integral bounds for the compressed branches are simultaneously met exactly when z equals x times y, at positive branch weight. The correspondence with stochastic strategies, membership and binary-reward reduction remain in the paper. [Source and replay](formalization/README.md)
